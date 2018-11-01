@@ -1,0 +1,18 @@
+---
+- name: set timezone
+  timezone:
+    name: Europe/Amsterdam
+- name: stop integrated ntp sync
+  systemd:
+    name: systemd-timesyncd
+    state: stopped
+- name: disable integrated ntp sync
+  systemd:
+    name: systemd-timesyncd
+    enabled: no
+- include_role:
+    name: apt-lock-wait
+- name: install sensible ntp daemon
+  apt:
+    name: ntp
+    state: present
