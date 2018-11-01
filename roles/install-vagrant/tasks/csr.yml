@@ -1,0 +1,26 @@
+---
+- name: make sure a vagrantboxes folder exists
+  file:
+    path: /opt/vagrantboxes/
+    state: directory
+    mode: 0755
+- name: copy the CSRv box
+  copy:
+    src: csr1000v
+    dest: /opt/vagrantboxes/csr1000v
+    mode: 0644
+- name: check if the box is already imported
+  command: vagrant box list
+  register: box_result
+  changed_when: False
+- name: import the CSRv box into vagrant
+  command: vagrant box add /opt/vagrantboxes/csr1000v --name csr1000v
+  when: '"csr1000v" not in box_result.stdout'
+- name: make sure a vagrant folder exists
+  file:
+    path: ~/vagrant/
+    state: directory
+- name: place a test Vagrantfile
+  copy:
+    src: Vagrantfile-test
+    dest: ~/vagrant/Vagrantfile
