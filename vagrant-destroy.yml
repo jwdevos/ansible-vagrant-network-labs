@@ -1,0 +1,14 @@
+---
+- import_playbook: vagrant-status.yml
+- name: Playbook for running "vagrant destroy -f" for all users
+  gather_facts: no
+  hosts: vagrant_hosts
+  become: yes
+  tasks:
+  - name: run "vagrant destroy -f"
+    command: chdir=/home/{{inventory_hostname}}/vagrant vagrant destroy -f
+    become_user: '{{inventory_hostname}}'
+    register: result
+    changed_when: '"Forcing shutdown of VM" in result.stdout'
+    failed_when: False
+- import_playbook: vagrant-status.yml
