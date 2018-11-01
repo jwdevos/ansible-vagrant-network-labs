@@ -1,0 +1,17 @@
+---
+- name: make sure docker folder exists
+  file:
+    path: ~/docker/
+    state: directory
+- name: copy Dockerfile
+  copy:
+    src: Dockerfile
+    dest: ~/docker/Dockerfile
+- name: copy docker requirements
+  copy:
+    src: requirements.txt
+    dest: ~/docker/requirements.txt
+- name: run docker build command
+  command: chdir=~/docker docker build -f ./Dockerfile -t automator .
+  register: docker_result
+  changed_when: '"Get:" in docker_result.stdout'
