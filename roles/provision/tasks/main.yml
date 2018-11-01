@@ -1,0 +1,13 @@
+---
+- name: provision role
+  include_tasks: '{{loop_item}}'
+  loop:
+    - auto-updates.yml
+    - time.yml
+    - apt-update.yml
+    - kernel-headers.yml
+    - dkms.yml
+    - ssh.yml
+    - ufw.yml
+  loop_control:
+    loop_var: loop_item
