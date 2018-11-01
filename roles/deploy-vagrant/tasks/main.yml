@@ -1,0 +1,7 @@
+---
+- name: deploy-vagrant role
+  include_tasks: '{{loop_item}}'
+  loop:
+    - deploy.yml
+  loop_control:
+    loop_var: loop_item
