@@ -1,0 +1,14 @@
+---
+- name: Playbook for running "vagrant status" for all users
+  gather_facts: no
+  hosts: vagrant_hosts
+  become: yes
+  tasks:
+  - name: run "vagrant status"
+    command: chdir=/home/{{inventory_hostname}}/vagrant vagrant status
+    become_user: '{{inventory_hostname}}'
+    changed_when: False
+    failed_when: False
+    register: result
+  - name: debug
+    debug: var=result.stdout_lines
