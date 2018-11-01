@@ -1,0 +1,7 @@
+---
+- include_role:
+    name: apt-lock-wait
+- name: install dkms
+  apt:
+    name: dkms
+    state: present
