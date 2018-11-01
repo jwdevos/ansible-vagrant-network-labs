@@ -1,0 +1,17 @@
+---
+- include_role:
+    name: apt-lock-wait
+- name: install kernel headers generic
+  apt:
+    name: linux-headers-generic
+    state: present
+- name: grab kernel version
+  command: uname -r
+  register: kernel_version
+  changed_when: False
+- include_role:
+    name: apt-lock-wait
+- name: install kernel headers
+  apt:
+    name: 'linux-headers-{{kernel_version.stdout}}'
+    state: latest
