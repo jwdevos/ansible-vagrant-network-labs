@@ -1,0 +1,21 @@
+---
+ansible_user: root
+ansible_python_interpreter: /usr/bin/python3
+ubuntu_version: bionic
+docker_url: https://download.docker.com/linux/ubuntu/dists/
+docker_url_postfix: /pool/stable/amd64/
+docker_file: docker-ce_18.06.1~ce~3-0~ubuntu_amd64.deb
+vagrant_url: https://releases.hashicorp.com/vagrant/
+vagrant_version: 2.2.0
+vagrant_file: /vagrant_2.2.0_x86_64.deb
+ufw_rfc1918_subnets:
+  - 10.0.0.0/8
+  - 172.16.0.0/12
+  - 192.168.0.0/16
+new_users:
+  - username: user1
+    password: $6$vdJmBCcRsYu$f.Wc6P5JwWh9SboGMXaocVwDseXSlmKAWGWPWYLy/xkJVqc6hz/rEaqY36O9KMQwDOw5FfMHLdqIOAgBNGvJx1
+    port_base: 1
+  - username: user2
+    password: $6$vdJmBCcRsYu$f.Wc6P5JwWh9SboGMXaocVwDseXSlmKAWGWPWYLy/xkJVqc6hz/rEaqY36O9KMQwDOw5FfMHLdqIOAgBNGvJx1
+    port_base: 6
