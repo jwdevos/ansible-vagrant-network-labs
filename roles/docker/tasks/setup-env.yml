@@ -1,0 +1,41 @@
+---
+- name: make sure group docker-users exists
+  group:
+    name: docker-users
+    state: present
+- name: place required config in /etc/sudoers
+  blockinfile:
+    path: /etc/sudoers
+    block: |
+      # config for Docker user scripts
+      %docker-users   ALL=(ALL)       NOPASSWD: /usr/bin/docker-start
+      %docker-users   ALL=(ALL)       NOPASSWD: /usr/bin/docker-connect
+      %docker-users   ALL=(ALL)       NOPASSWD: /usr/bin/docker-stop
+      %docker-users   ALL=(ALL)       NOPASSWD: /usr/bin/docker-execute
+      %docker-users   ALL=(ALL)       NOPASSWD: /usr/bin/docker-info
+    validate: '/usr/sbin/visudo -cf %s'
+- name: copy docker-connect script
+  copy:
+    src: scripts/docker-connect.sh
+    dest: /usr/bin/docker-connect
+    mode: 0755
+- name: copy docker-execute script
+  copy:
+    src: scripts/docker-execute.sh
+    dest: /usr/bin/docker-execute
+    mode: 0755
+- name: copy docker-info script
+  copy:
+    src: scripts/docker-info.sh
+    dest: /usr/bin/docker-info
+    mode: 0755
+- name: copy docker-start script
+  copy:
+    src: scripts/docker-start.sh
+    dest: /usr/bin/docker-start
+    mode: 0755
+- name: copy docker-stop script
+  copy:
+    src: scripts/docker-stop.sh
+    dest: /usr/bin/docker-stop
+    mode: 0755
