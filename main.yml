@@ -1,0 +1,12 @@
+---
+- hosts: testub
+  gather_facts: yes
+  become: yes
+  roles:
+    - {role: "provision", tags: "provision"}
+    - {role: "update", tags: "update"}
+    - {role: "docker", tags: "docker"}
+    - {role: "vbox", tags: "vbox"}
+    - {role: "install-vagrant", tags: "install-vagrant"}
+    - {role: "create-users", tags: "create-users"}
+    - {role: "deploy-vagrant", tags: "deploy-vagrant"}
