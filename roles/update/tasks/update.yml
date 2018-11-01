@@ -1,0 +1,22 @@
+---
+- include_role:
+    name: apt-lock-wait
+- name: apt update
+  apt:
+    update_cache: yes
+    cache_valid_time: 3600
+  register: apt_result
+  until: apt_result is success
+  retries: 3
+  delay: 1
+  ignore_errors: yes
+- include_role:
+    name: apt-lock-wait
+- name: if needed, retry apt update using command module
+  command: apt-get update
+  when: apt_result is failed
+- include_role:
+    name: apt-lock-wait
+- name: apt dist-upgrade
+  apt:
+    upgrade: dist
