@@ -1,0 +1,9 @@
+---
+- name: docker role
+  include_tasks: '{{loop_item}}'
+  loop:
+    - install.yml
+    - build.yml
+    - setup-env.yml
+  loop_control:
+    loop_var: loop_item
