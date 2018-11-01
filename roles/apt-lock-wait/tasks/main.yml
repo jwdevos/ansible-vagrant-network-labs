@@ -1,0 +1,6 @@
+---
+- name: wait for apt lock
+  shell: while fuser /var/lib/dpkg/lock >/dev/null ; do sleep 1 ; done
+  args:
+    executable: /bin/bash
+  changed_when: False
