@@ -1,0 +1,6 @@
+---
+- include_role:
+    name: apt-lock-wait
+- name: install vagrant
+  apt:
+    deb: "{{vagrant_url+vagrant_version+vagrant_file}}"
