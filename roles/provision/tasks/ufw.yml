@@ -1,0 +1,27 @@
+---
+- include_role:
+    name: apt-lock-wait
+- name: install ufw
+  apt:
+    name: ufw
+    state: present
+- name: ufw allow ssh
+  ufw:
+    rule: allow
+    port: 22
+    proto: tcp
+  register: ssh_rule
+- name: ufw allow RFC1918
+  ufw:
+    rule: allow
+    proto: tcp
+    src: '{{item}}'
+  loop: '{{ufw_rfc1918_subnets}}'
+  register: rfc1918_rule
+- name: enable ufw
+  ufw:
+    state: enabled
+- name: reload ufw if changed
+  ufw:
+    state: reloaded
+  when: ssh_rule.changed or rfc1918_rule.changed
