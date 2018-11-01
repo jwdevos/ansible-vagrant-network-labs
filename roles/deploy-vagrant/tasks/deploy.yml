@@ -1,0 +1,24 @@
+---
+- name: create ~/vagrant dir for each new user
+  file:
+    path: /home/{{item.username}}/vagrant
+    state: directory
+  become_user: '{{item.username}}'
+  loop: '{{new_users}}'
+- name: place Vagrantfile for each user
+  template:
+    src: Vagrantfile-lab.j2
+    dest: /home/{{item.username}}/vagrant/Vagrantfile
+  become_user: '{{item.username}}'
+  loop: '{{new_users}}'
+- name: check if the box is already imported
+  command: chdir=/home/{{item.username}}/vagrant vagrant box list
+  register: box_status
+  become_user: '{{item.username}}'
+  loop: '{{new_users}}'
+  changed_when: False
+- name: import vagrant box
+  command: chdir=/home/{{item.item.username}}/vagrant vagrant box add /opt/vagrantboxes/csr1000v --name csr1000v
+  become_user: '{{item.item.username}}'
+  when: '"csr1000v" not in item.stdout'
+  loop: '{{box_status.results}}'
