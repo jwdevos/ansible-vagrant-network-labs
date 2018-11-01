@@ -1,0 +1,13 @@
+---
+- include_role:
+    name: apt-lock-wait
+- name: install libltd17 dependency
+  apt:
+    name: libltdl7
+    state: present
+    update_cache: yes
+- include_role:
+    name: apt-lock-wait
+- name: install docker
+  apt:
+    deb: "{{docker_url+ubuntu_version+docker_url_postfix+docker_file}}"
