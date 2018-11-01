@@ -1,0 +1,7 @@
+---
+- name: create-users role
+  include_tasks: '{{loop_item}}'
+  loop:
+    - create-users.yml
+  loop_control:
+    loop_var: loop_item
