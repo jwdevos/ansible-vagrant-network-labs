@@ -1,0 +1,15 @@
+# -*- mode: ruby -*-
+# vi: set ft=ruby :
+
+Vagrant.configure(2) do |config|
+  config.ssh.insert_key = false
+  config.vm.define "csr1" do |csr1|
+    csr1.vm.box = "csr1000v"
+    csr1.vm.boot_timeout = 600
+    csr1.vm.network :forwarded_port, guest: 22, host: 12200, host_ip: "0.0.0.0", id: 'ssh'
+    csr1.vm.network "private_network", virtualbox__intnet: "1_2",
+                    ip: "169.254.1.11", auto_config: false
+    csr1.vm.network "private_network", virtualbox__intnet: "1_4",
+                    ip: "169.254.1.11", auto_config: false
+  end
+end
