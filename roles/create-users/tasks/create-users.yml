@@ -1,0 +1,19 @@
+- name: add users
+  user:
+    name: '{{item.username}}'
+    password: '{{item.password}}'
+    group: docker-users
+    shell: /bin/bash
+  loop: '{{new_users}}'
+- name: create ~/.ansible dir for each new user
+  file:
+    path: /home/{{item.username}}/.ansible
+    state: directory
+  become_user: '{{item.username}}'
+  loop: '{{new_users}}'
+- name: create ~/.projects dir for each new user
+  file:
+    path: /home/{{item.username}}/projects
+    state: directory
+  become_user: '{{item.username}}'
+  loop: '{{new_users}}'
