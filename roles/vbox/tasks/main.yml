@@ -1,0 +1,7 @@
+---
+- name: vbox role
+  include_tasks: '{{loop_item}}'
+  loop:
+    - install.yml
+  loop_control:
+    loop_var: loop_item
