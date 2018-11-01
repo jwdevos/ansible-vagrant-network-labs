@@ -1,0 +1,12 @@
+---
+- import_playbook: vagrant-destroy.yml
+- name: Playbook for running "vagrant up" for each user
+  gather_facts: no
+  hosts: vagrant_hosts
+  become: yes
+  serial: "50%"
+  tasks:
+  - name: run "vagrant up"
+    command: chdir=/home/{{inventory_hostname}}/vagrant vagrant up
+    become_user: '{{inventory_hostname}}'
+- import_playbook: vagrant-status.yml
